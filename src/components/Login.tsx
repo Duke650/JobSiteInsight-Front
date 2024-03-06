@@ -1,3 +1,5 @@
+import "../static/styles/login.css"
+
 const Login = () => {
   return (
     <div className="my-login-form-container">

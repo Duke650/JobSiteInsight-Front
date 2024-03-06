@@ -1,9 +1,19 @@
-// import "signup" from "../static/styles/signup.css"
+import "../static/styles/signup.css"
+import { useState } from "react";
 
 const Signup = () => {
 
+const [firstName, setFirstName] = useState("")
+const [lastName, setLastName] = useState("")
+const [username, setUsername] = useState("")
+const [email, setEmail] = useState("")
+const [phoneNumber, setPhoneNumber] = useState(0)
+const [password, setPassword] = useState("")
+const [confirmPassword, setConfirmPassword] = useState("")
 
-
+// const signupUser = async () => {
+//     const request = 
+// }
 
   return (
     <>
@@ -17,6 +27,7 @@ const Signup = () => {
                 className="form-control"
                 id="inputEmail4"
                 placeholder="First Name"
+                onChange={e => setFirstName(e.target.value)}
               />
             </div>
             
@@ -27,6 +38,7 @@ const Signup = () => {
                 className="form-control"
                 id="inputPassword4"
                 placeholder="Last Name"
+                onChange={e => setLastName(e.target.value)}
               />
             </div>
             <div className="form-group col-md-6">
@@ -34,8 +46,9 @@ const Signup = () => {
               <input
                 type="text"
                 className="form-control"
-                id="inputEmail4"
+                id="inputEmail5"
                 placeholder="Username"
+                onChange={e => setUsername(e.target.value)}
               />
             </div>
             
@@ -46,6 +59,7 @@ const Signup = () => {
                 className="form-control"
                 id="inputPassword4"
                 placeholder="Email"
+                onChange={e => setEmail(e.target.value)}
               />
             </div>
             
@@ -57,6 +71,7 @@ const Signup = () => {
               placeholder="123-45-6789" pattern="[0-9]{3}[0-9]{3}[0-9]{4}" required
               className="form-control"
               id="inputAddress"
+              onChange={e => setPhoneNumber(Number(e.target.value))}
             />
           </div>
           <div className="form-group">
@@ -66,6 +81,7 @@ const Signup = () => {
               placeholder="Password"
               className="form-control"
               id="inputPassword4"
+              onChange={e => setPassword(e.target.value)}
             />
           </div>
           <div className="form-group">
@@ -75,10 +91,9 @@ const Signup = () => {
               placeholder="Confirm Password"
               className="form-control"
               id="inputPassword4"
+              onChange={e => setConfirmPassword(e.target.value)}
             />
           </div>
-          
-          
 
           <button type="submit" className="btn btn-primary">
             Sign up
@@ -90,15 +105,5 @@ const Signup = () => {
 };
 
 {
-  /* <form>
-              <input type="text" placeholder="Username"/>
-              <input type="text" placeholder="First Name"/>
-              <input type="text"  placeholder="Last Name"/>
-              <input type="text" placeholder="Email"/>
-              <input type="tel" placeholder="123-45-6789" pattern="[0-9]{3}[0-9]{3}[0-9]{4}" required/>
-              <input type="password" placeholder="Password"/>
-              <input type="password" placeholder="Confirm Password"/>
-
-          </form> */
 }
 export default Signup;
