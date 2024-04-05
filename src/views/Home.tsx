@@ -1,10 +1,15 @@
-import Search from "../components/Search"
+import { useEffect, useState } from "react"
+import Search from "../components/Search/Search"
 
+interface IProps {
+  isLoggedIn: boolean
+}
 
-const Home = () => {
+const Home: React.FC<IProps> = ({isLoggedIn}) => {
+
   return (
     <>
-        <Search />
+        <Search isLoggedIn={isLoggedIn}/>
     </>
   )
 }

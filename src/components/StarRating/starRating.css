@@ -1,0 +1,11 @@
+.star {
+    cursor: pointer;
+  }
+  
+  input[type="radio"] {
+    display: none;
+  }
+
+  .star-active {
+    color: #ffc107 !important;
+  }

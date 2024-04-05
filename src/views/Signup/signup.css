@@ -1,0 +1,34 @@
+.my-signup-form-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .my-signup-form-container form {
+    margin-top: 20px;
+  }
+  
+  .my-signup-form-container form label {
+    font-weight: bold;
+  }
+  
+  .my-signup-form-container form input,
+  .my-signup-form-container form textarea {
+    margin-bottom: 10px;
+  }
+  
+  .my-signup-form-container form button {
+    margin-top: 20px;
+  }
+  
+  .alert {
+    margin-top: 20px;
+  }
+
+  .error-message {
+    font-weight: bold;
+    color: red;
+    font-size: 1.5em;
+    text-align: center;
+  }
+  

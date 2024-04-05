@@ -1,0 +1,72 @@
+* {
+    padding: 0;
+    margin: 0;
+    font-family: "Rakkas", serif;
+    /* color: var(--text-color); */
+}
+
+:root {
+    --primary-color: #FBFDFB;
+    --text-color: #080908;
+    --secondary-color-lgt-blue: #55BC51; 
+    --secondary-color-lgt-brown: #91E58E;
+    --button-hover: #4fdb4a;
+  }
+
+nav {
+    display: flex;
+    justify-content: center;
+}
+
+body {
+    background-color: var(--primary-color);
+    height: 100dvh ;
+}
+
+.navbar-brand {
+    font-weight: bold;
+    font-size: 1.5em;
+}
+
+
+#my-navbar  {
+    background-color: var(--primary-color) !important;
+    border-bottom: 1px solid var(--secondary-color-lgt-blue);
+    position: sticky;
+}
+
+.nav-link, .navbar-brand {
+    color: var(--text-color) ;
+
+}
+.nav-link {
+    font-size: 1.2em;
+}
+
+.my-link-group {
+    display: flex;
+    gap: 1em;
+}
+
+li {
+    list-style: none;
+    cursor: pointer;
+}
+
+#my-navbar-icon {
+    background-color: var(--secondary-color-lgt-blue);
+}
+
+#my-navbar-icon:focus {
+    outline: none;
+}
+
+#logout {
+    color: red !important;
+}
+/* Custom CSS for navbar */
+.navbar-light .navbar-nav .nav-link:hover {
+    color: var(--secondary-color-lgt-brown); /* Change the color for hover state */
+  }
+  
+  

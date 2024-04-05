@@ -1,0 +1,23 @@
+.my-map {
+    width: 50%;
+    height: 400px;
+}
+@media (max-width: 1400px) {
+    .my-map {
+        min-width: 100% !important;
+        height: 400px;
+    }
+}
+
+#toggle {
+    margin: 2.5em;
+    background-color: var(--secondary-color-lgt-blue);
+    border: none;
+    padding: .5em 2em;
+}
+
+#toggle:hover {
+    background-color: var(--button-hover);
+    transition: 400ms;
+    box-shadow: 5px 3px 10px var(--button-hover)
+}

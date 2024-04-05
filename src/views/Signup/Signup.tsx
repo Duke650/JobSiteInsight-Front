@@ -1,12 +1,12 @@
 import { useNavigate } from "react-router-dom";
-import "../static/styles/signup.css";
+import "./signup.css";
 import { useState } from "react";
 
 const Signup = () => {
   const [user, setUser] = useState({
     firstName: "",
     lastName: "",
-    username: "",
+    company_name: "",
     email: "",
     phoneNumber: "",
     password: "",
@@ -14,7 +14,12 @@ const Signup = () => {
   });
   const [error, setError] = useState("");
   const [showMessage, setShowMessage] = useState(false);
+  // const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  // console.log('selectedFile :>> ', selectedFile);
 
+
+  // const apiKey = process.env.REACT_APP_GOOGLE_API_KEY
+  // console.log('apiKey :>> ', apiKey);
   const navigate = useNavigate();
 
   const handleSignup = async (e: React.FormEvent) => {
@@ -27,7 +32,7 @@ const Signup = () => {
           body: JSON.stringify({
             first_name: user.firstName,
             last_name: user.lastName,
-            username: user.username,
+            company_name: user.company_name,
             email: user.email,
             phone_number: user.phoneNumber,
             password: user.password,
@@ -53,6 +58,19 @@ const Signup = () => {
     }
   };
 
+  // const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+  //   if (event.target.files && event.target.files.length > 0) {
+  //     setSelectedFile(event.target.files[0]);
+  //   }
+  // };
+
+  // const handleUpload = () => {
+  //   if (selectedFile) {
+  //     // Perform upload logic here, such as sending the file to a server
+  //     console.log(selectedFile);
+  //   }
+  // };
+
   return (
     <>
       {showMessage && (
@@ -72,6 +90,7 @@ const Signup = () => {
         </div>
       )}
       <div className="my-signup-form-container">
+        <h1>Sign up</h1>
         <form onSubmit={(e) => handleSignup(e)}>
           <div className="form-row">
             <div className="form-group col-md-6">
@@ -87,7 +106,7 @@ const Signup = () => {
                 required
               />
             </div>
-
+  
             <div className="form-group col-md-6">
               <label htmlFor="inputName1">Last Name</label>
               <input
@@ -100,17 +119,17 @@ const Signup = () => {
               />
             </div>
             <div className="form-group col-md-6">
-              <label htmlFor="inputEmail5">Username</label>
+              <label htmlFor="inputEmail5">Company Name</label>
               <input
                 type="text"
                 className="form-control"
                 id="inputEmail5"
-                placeholder="Username"
-                onChange={(e) => setUser({ ...user, username: e.target.value })}
+                placeholder="Company Name"
+                onChange={(e) => setUser({ ...user, company_name: e.target.value })}
                 required
               />
             </div>
-
+  
             <div className="form-group col-md-6">
               <label htmlFor="inputEmail8">Email</label>
               <input
@@ -161,14 +180,15 @@ const Signup = () => {
               required
             />
           </div>
-          {error && <p>{error}</p>}
-          <button type="submit" className="btn btn-primary">
+          {error && <p className="error-message">{error}</p>}
+          <button type="submit" className="btn btn-primary login-btn">
             Sign up
           </button>
         </form>
       </div>
     </>
   );
+  
 };
 
 export default Signup;

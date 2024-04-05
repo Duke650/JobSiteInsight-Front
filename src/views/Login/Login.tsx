@@ -1,8 +1,13 @@
 import { useState } from "react";
-import "../static/styles/login.css";
-import { useNavigate } from "react-router-dom";
+import "./login.css";
+import { useNavigate, Link } from "react-router-dom";
 
-const Login = () => {
+interface IProps {
+  updateLoginState: (newValue: boolean) => void;
+  setUser: (user: {username: string, email: string, token: string}) => void
+}
+
+const Login: React.FC<IProps> = ({ updateLoginState, setUser}) => {
   const [loginUser, setLoginUser] = useState({
     email: "",
     password: "",
@@ -28,7 +33,18 @@ const Login = () => {
       setShowMessage(() => true);
       setTimeout(async () => {
         navigate("/");
+        console.log('data.message :>> ', await response.json());
       }, 1500);
+      const data = await response.json()
+      console.log('data :>> ', data);
+      setUser(data.user)
+      localStorage.setItem('email', data.user.email)
+      localStorage.setItem('user_id', data.user.user_id)
+      localStorage.setItem('first_name', data.user.first_name)
+      localStorage.setItem('last_name', data.user.last_name)
+
+
+      updateLoginState(true)
     } catch (error) {
       setError("Error logging in");
     }
@@ -53,6 +69,7 @@ const Login = () => {
         </div>
       )}
       <div className="my-login-form-container">
+        <h1>Login</h1>
         <form>
           <div className="form-group">
             <label htmlFor="exampleInputEmail1">Email address</label>
@@ -79,10 +96,12 @@ const Login = () => {
               }
             />
           </div>
-          {error && <p>{error}</p>}
+          {error && <p className="error-message">{error}</p>}
+          <span>Don't have an account? <Link to={"/signup"}>Sign up here</Link> </span>
+          <br />
           <button
             type="submit"
-            className="btn btn-primary"
+            className="btn btn-primary login-btn"
             onClick={(e) => handleLogin(e)}
           >
             Submit
@@ -91,6 +110,7 @@ const Login = () => {
       </div>
     </>
   );
+  
 };
 
 export default Login;

@@ -1,0 +1,152 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+}
+
+.search-container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 2em;
+    background-color: var(--primary-color);
+    color: var(--text-color);
+}
+
+#search-input {
+    padding: 5px;
+    border: none;
+}
+
+#search-input:focus {
+    outline: none;
+    border-bottom: 2px solid black;
+    
+}
+
+.search-form:focus {
+    border: 2px solid black;
+}
+
+.search-bar-container:focus {
+    border: 1px solid black;
+}
+
+.search-input {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.my-search-btn {
+    margin: 1em 0 5em;
+    width: 35%;
+    background-color: var(--secondary-color-lgt-blue);
+    color: var(--primary-color);
+    padding: 5px 10px;
+    cursor: pointer;
+    outline: none;
+    border: none;
+    font-weight: bold;
+    font-size: 1.2em;
+    border-radius: 10px;
+}
+
+.my-search-btn:hover {
+    background-color: var(--button-hover);
+    transition: 400ms;
+    box-shadow: 5px 3px 10px var(--button-hover)
+}
+
+.pac-target-input {
+    /* background-color: var(--primary-color); */
+    color: var(--text-color);
+    padding: 10px;
+    width: 70%;
+}
+
+.pac-target-input:focus {
+    outline: none;
+}
+
+.pac-container {
+    background-color: var(--primary-color);
+    color: var(--text-color);
+}
+
+.pac-item {
+    color: var(--text-color);
+    font-size: 1em;
+    padding: 10px;
+}
+
+.pac-item-query {
+    color: var(--secondary-color-lgt-blue);
+    font-size: 1em;
+    cursor: pointer;
+}
+
+.pac-item:hover {
+    background-color: #7e7e7e9c;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+@media (min-width: 1300px) {
+    .pac-target-input {
+        width: 30%;
+    }
+    .my-search-btn {
+        width: 20%;
+
+    }
+}
+
+.enter-address-label {
+    font-weight: bold;
+    font-size: 1.5em;
+}
+
+/* styles.css */
+
+.welcome-message {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .welcome-title {
+    font-size: 2.5rem;
+    color: var(--text-color);
+    margin-bottom: 20px;
+  }
+  
+  .welcome-text {
+    font-size: 1.2rem;
+    color: var(--text-color);
+    margin-bottom: 20px;
+    max-width: 70%;
+    text-align: center;
+  }
+
+  .all-reviews-container {
+    display: flex;
+    flex-direction: column;
+    width: 75%;
+  }
+
+  .login-to-review {
+    font-size: 1.5em;
+  }
+
+  .form-control:focus {
+    box-shadow: none;
+    border: 1px solid black;
+    transform: scale(1.02);
+    transition: 300ms;
+  }
+  

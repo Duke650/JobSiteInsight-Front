@@ -1,0 +1,47 @@
+.star {
+    cursor: pointer;
+  }
+  
+  input[type="radio"] {
+    display: none;
+  }
+
+  .form-label {
+    padding-top: 10px;
+  }
+
+  textarea {
+    resize: none;
+  }
+
+  .submit-review-btn {
+    background-color: var(--secondary-color-lgt-blue);
+    border: none;
+    width: 70%;
+  }
+
+  .submit-review-btn:hover {
+    background-color: var(--secondary-color-lgt-brown);
+    background-color: var(--button-hover);
+    transition: 400ms;
+    box-shadow: 5px 3px 10px var(--button-hover);
+    transform: scale(1.05);
+  }
+
+  .submit-review-btn-container {
+      display: flex;
+      justify-content: center;
+      margin: 2em 0;
+  }
+
+  .form-control {
+    outline: none;
+}
+
+.rated-stars {
+  text-align: center;
+}
+
+
+
+  
