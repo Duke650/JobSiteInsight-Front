@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+
 import Search from "../components/Search/Search"
 
 interface IProps {

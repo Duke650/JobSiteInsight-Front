@@ -1,10 +1,9 @@
-
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import "./streetMap.css"
 
 const StreetViewMap = ({ lat, lng }) => {
-  let panorama;
-  let marker;
+  const panoramaRef = useRef(null);
+  const markerRef = useRef(null);
 
   useEffect(() => {
     const astorPlace = { lat: lat, lng: lng };
@@ -17,26 +16,26 @@ const StreetViewMap = ({ lat, lng }) => {
     const toggleButton = document.getElementById('toggle');
 
     const toggleStreetView = () => {
-      const toggle = panorama.getVisible();
-      panorama.setVisible(!toggle);
+      const toggle = panoramaRef.current.getVisible();
+      panoramaRef.current.setVisible(!toggle);
     };
 
     toggleButton.addEventListener('click', toggleStreetView);
 
-    panorama = map.getStreetView();
+    const panorama = map.getStreetView();
+    panoramaRef.current = panorama;
+
     panorama.setPosition(astorPlace);
     panorama.setPov({
       heading: 265,
       pitch: 0,
     });
 
-     let marker = new window.google.maps.Marker({
+    markerRef.current = new window.google.maps.Marker({
       position: astorPlace,
       map: map,
       title: 'Location',
     });
-
-    
 
     return () => {
       if (toggleButton) {
@@ -47,17 +46,10 @@ const StreetViewMap = ({ lat, lng }) => {
 
   return (
     <>
-    
       <div id="map" className='card my-map'></div>
-    
-
       <button id="toggle" className='btn btn-primary'>Toggle Street View</button>
     </>
   );
 };
 
 export default StreetViewMap;
-
-
-
-
