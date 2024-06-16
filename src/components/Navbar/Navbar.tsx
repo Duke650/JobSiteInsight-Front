@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import "./navbar.css";
-import { useState } from "react";
+import config from "../../config/config";
 
 interface IProps {
   isLoggedIn: boolean;
@@ -8,10 +8,12 @@ interface IProps {
   updateLoginState: (newValue: boolean) => void;
 }
 
-const Navbar: React.FC<IProps> = ({ isLoggedIn, updateLoginState, user }) => {
+const Navbar: React.FC<IProps> = ({ isLoggedIn, updateLoginState }) => {
+
+  const url = config.backendURL
   const handleLogout = async () => {
     try {
-      const response = await fetch("http://127.0.0.1:5000/logout", {
+      const response = await fetch(`${url}/logout`, {
         method: "POST",
         headers: {
           "Content-type": "application/json",

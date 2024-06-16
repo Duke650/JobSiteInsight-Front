@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import "./signup.css";
 import { useState } from "react";
+import config from "../../config/config";
 
 const Signup = () => {
   const [user, setUser] = useState({
@@ -14,19 +15,14 @@ const Signup = () => {
   });
   const [error, setError] = useState("");
   const [showMessage, setShowMessage] = useState(false);
-  // const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  // console.log('selectedFile :>> ', selectedFile);
-
-
-  // const apiKey = process.env.REACT_APP_GOOGLE_API_KEY
-  // console.log('apiKey :>> ', apiKey);
+  const url = config.backendURL
   const navigate = useNavigate();
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
     if (user.password === user.confirmPassword) {
       try {
-        const response = await fetch("http://127.0.0.1:5000/signup", {
+        const response = await fetch(`${url}/signup`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -57,19 +53,6 @@ const Signup = () => {
       setError("Passwords do not match");
     }
   };
-
-  // const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
-  //   if (event.target.files && event.target.files.length > 0) {
-  //     setSelectedFile(event.target.files[0]);
-  //   }
-  // };
-
-  // const handleUpload = () => {
-  //   if (selectedFile) {
-  //     // Perform upload logic here, such as sending the file to a server
-  //     console.log(selectedFile);
-  //   }
-  // };
 
   return (
     <>

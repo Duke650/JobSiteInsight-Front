@@ -4,13 +4,14 @@ import Home from "../views/Home"
 import Signup from "../views/Signup/Signup"
 import Login from "../views/Login/Login"
 import { useEffect, useState } from "react"
+import config from "../config/config"
 
 
 function App() {
 
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [user, setUser] = useState({username: "", email: "", token: ""})
-  console.log('isLoggedIn :>> ', isLoggedIn);
+  const url = config.backendURL
   // const apiKey = window.env.REACT_APP_API_KEY;
   useEffect(() => {
     checkLoginStatus()
@@ -21,7 +22,7 @@ function App() {
 
 
   const checkLoginStatus = async () => {
-    const response = await fetch(`http://127.0.0.1:5000/login_status/${localStorage.getItem("email")}`)
+    const response = await fetch(`${url}/login_status/${localStorage.getItem("email")}`)
     const data = await response.json()
     console.log('log in status :>> ', data);
     if (data) {

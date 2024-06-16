@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { FaStar } from "react-icons/fa";
 import "./reviewsForLocation.css"
+import config from "../../config/config";
 
 interface IReviewsForLocation {
   locationId: number | null;
@@ -22,8 +23,7 @@ const ReviewsForLocation: React.FC<IReviewsForLocation> = ({
   reviewCount,
 }) => {
   const [allReviews, setAllReviews] = useState<IReviews[]>([]);
-  console.log("allReviews :>> ", allReviews.length);
-  console.log("locationId :>> ", locationId);
+  const url = config.backendURL
 
   useEffect(() => {
     fetchAllReviewsForLocation();
@@ -31,7 +31,7 @@ const ReviewsForLocation: React.FC<IReviewsForLocation> = ({
 
   const fetchAllReviewsForLocation = async () => {
     const response = await fetch(
-      `http://127.0.0.1:5000/get_reviews_by_location_id/${locationId}`
+      `${url}/get_reviews_by_location_id/${locationId}`
     );
     const data = await response.json();
     setAllReviews(data.reviews);

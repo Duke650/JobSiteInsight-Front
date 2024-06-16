@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
 import { FaStar } from "react-icons/fa";
 import "./reviewsForm.css";
+import config from "../../config/config";
 
 interface IProps {
   locationId: number | null;
   setReviewCount: React.Dispatch<React.SetStateAction<number>>;
   isLoggedIn: boolean
 }
-const Reviews: React.FC<IProps> = ({ locationId, setReviewCount, isLoggedIn }) => {
+const Reviews: React.FC<IProps> = ({ locationId, setReviewCount }) => {
+  const url = config.backendURL
   const date = new Date();
   const formattedDate = new Intl.DateTimeFormat("en-US", {
     month: "short",
@@ -35,7 +37,7 @@ const Reviews: React.FC<IProps> = ({ locationId, setReviewCount, isLoggedIn }) =
 
   const handleAddReview = async (e) => {
     e.preventDefault();
-    const response = await fetch("http://127.0.0.1:5000/create_review", {
+    const response = await fetch(`${url}/create_review`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ review: review }),

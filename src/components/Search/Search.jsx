@@ -5,16 +5,17 @@ import StreetViewMap from "../StreetMapView/StreetViewMap";
 import Reviews from "../Reviews/ReviewsForm";
 import ReviewsForLocation from "../ReviewsForLocation/ReviewsForLocation";
 import { Link } from "react-router-dom"
+import config from "../../config/config";
 
 
 
 const Search = ({isLoggedIn}) => {
   const [address, setAddress] = useState("");
-  // const [placeId, setPlaceId] = useState(0);
   const [lat, setLat] = useState(null);
   const [lng, setLng] = useState(null);
   const [locationId, setLocationId] = useState(0);
   const [reviewCount, setReviewCount] = useState(0)
+  const url = config.backendURL
 
   const autoCompletedRef = useRef();
   const inputRef = useRef();
@@ -50,7 +51,7 @@ const Search = ({isLoggedIn}) => {
 
 
   const addLocation = async () => {
-    const response = await fetch("http://127.0.0.1:5000/add_job_location", {
+    const response = await fetch(`${url}/add_job_location`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ formatted_address: address }),
@@ -79,7 +80,7 @@ const Search = ({isLoggedIn}) => {
 
   const checkIfLocationExists = async () => {
     const response = await fetch(
-      `http://127.0.0.1:5000/location_by_address/${address}`
+      `${url}/location_by_address/${address}`
     );
     const data = await response.json();
     return data;

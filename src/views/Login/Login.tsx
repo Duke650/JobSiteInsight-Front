@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "./login.css";
 import { useNavigate, Link } from "react-router-dom";
+import config from "../../config/config";
 
 interface IProps {
   updateLoginState: (newValue: boolean) => void;
@@ -14,13 +15,13 @@ const Login: React.FC<IProps> = ({ updateLoginState, setUser}) => {
   });
   const [error, setError] = useState("");
   const [showMessage, setShowMessage] = useState(false);
-
+  const url = config.backendURL
   const navigate = useNavigate();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://127.0.0.1:5000/login", {
+      const response = await fetch(`${url}/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(loginUser),
