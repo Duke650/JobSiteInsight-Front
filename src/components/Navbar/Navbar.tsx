@@ -33,40 +33,6 @@ const Navbar: React.FC<IProps> = ({ isLoggedIn, updateLoginState, user }) => {
 
   return (
     <>
-      {/* <nav className="navbar navbar-expand-lg navbar-light bg-light">
-        <button
-          className="navbar-toggler"
-          type="button"
-          data-toggle="collapse"
-          data-target="#navbarNavAltMarkup"
-          aria-controls="navbarNavAltMarkup"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span className="navbar-toggler-icon" />
-        </button>
-        <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
-          <div className="navbar-nav">
-            <Link to="/" className="nav-item nav-link">
-              Home
-            </Link>
-            {!isLoggedIn ? (
-              <>
-                <Link to="/login" className="nav-item nav-link">
-                  Login
-                </Link>
-                <Link to="/signup" className="nav-item nav-link">
-                  Signup
-                </Link>
-              </>
-            ) : (
-              <Link to="/" className="nav-item nav-link" onClick={handleLogout}>
-                Logout
-              </Link>
-            )}
-          </div>
-        </div>
-      </nav> */}
       <nav id="my-navbar" className="navbar navbar-expand-lg navbar-light bg-light" >
         <Link to="/" className="navbar-brand">
         JobSiteInsight

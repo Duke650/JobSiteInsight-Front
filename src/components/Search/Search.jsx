@@ -87,9 +87,9 @@ const Search = ({isLoggedIn}) => {
 
   return (
     <div className="search-container card">
-    <div class="welcome-message">
-    <h1 class="welcome-title">Welcome to JobSite Insight</h1>
-    <p class="welcome-text">
+    <div className="welcome-message">
+    <h1 className="welcome-title">Welcome to JobSite Insight</h1>
+    <p className="welcome-text">
       At JobSite Insight, we believe in the power of shared experiences. Our platform is designed to help companies like yours review and share insights about the job locations you've worked at. Whether you're a plumbing company, an electrical contractor, or a landscaping service, your feedback matters.
     </p>
   </div>

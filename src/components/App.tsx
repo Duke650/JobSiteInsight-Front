@@ -4,7 +4,6 @@ import Home from "../views/Home"
 import Signup from "../views/Signup/Signup"
 import Login from "../views/Login/Login"
 import { useEffect, useState } from "react"
-// import {loadScript} from "../components/utils/utils.js"
 
 
 function App() {

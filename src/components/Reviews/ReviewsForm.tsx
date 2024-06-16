@@ -25,8 +25,6 @@ const Reviews: React.FC<IProps> = ({ locationId, setReviewCount, isLoggedIn }) =
     rating: 0,
   });
 
-  console.log("locationId :>> ", locationId);
-
   const [hover, setHover] = useState(0);
 
   console.log("review :>> ", review);

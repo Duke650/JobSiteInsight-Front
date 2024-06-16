@@ -7,6 +7,8 @@ import { fileURLToPath } from 'url'; // Import fileURLToPath function
 
 const env = dotenv.config().parsed;
 
+console.log("MADE IT");
+
 // Get the directory path of the current file
 // const __dirname = path.dirname(new URL(import.meta.url).pathname);
 
@@ -16,7 +18,7 @@ const __dirname = path.dirname(__filename);
 
 // Resolve the correct file paths
 const htmlTemplatePath = path.resolve(__dirname, 'index.html');
-const outputHtmlPath = path.resolve(__dirname, 'dist', 'index.html');
+const outputHtmlPath = path.resolve(__dirname, 'index.html');
 
 
 
@@ -24,10 +26,10 @@ const outputHtmlPath = path.resolve(__dirname, 'dist', 'index.html');
 let htmlTemplate = readFileSync(htmlTemplatePath, 'utf-8');
 
 // Replace placeholders in HTML template with actual environment variables
-Object.keys(env).forEach((key) => {
+  const key = "REACT_APP_GOOGLE_API_KEY"
   const placeholder = new RegExp(`%${key}%`, 'g');
   htmlTemplate = htmlTemplate.replace(placeholder, env[key]);
-});
+
 
 // Write the modified HTML content to a new file
 writeFileSync(outputHtmlPath, htmlTemplate, 'utf-8');
