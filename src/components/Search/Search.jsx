@@ -14,8 +14,8 @@ const Search = ({isLoggedIn}) => {
   const [lat, setLat] = useState(null);
   const [lng, setLng] = useState(null);
   const [locationId, setLocationId] = useState(0);
-  const [reviewCount, setReviewCount] = useState(0)
-  const url = config.backendURL
+  const [reviewCount, setReviewCount] = useState(0);
+  const url = config.backendURL;
 
   const autoCompletedRef = useRef();
   const inputRef = useRef();
@@ -33,6 +33,11 @@ const Search = ({isLoggedIn}) => {
   };
 
   useEffect(() => {
+    if (!window.google) {
+      console.error("Google Maps JavaScript API script not loaded.");
+      return;
+    }
+
     autoCompletedRef.current = new window.google.maps.places.Autocomplete(
       inputRef.current,
       options
@@ -44,11 +49,11 @@ const Search = ({isLoggedIn}) => {
     });
 
     return () => {
-      // Clean up the Autocomplete instance
-      autoCompletedRef.current.unbindAll();
+      if (autoCompletedRef.current) {
+        autoCompletedRef.current.unbindAll();
+      }
     };
   }, []);
-
 
   const addLocation = async () => {
     const response = await fetch(`${url}/add_job_location`, {
@@ -57,31 +62,37 @@ const Search = ({isLoggedIn}) => {
       body: JSON.stringify({ formatted_address: address }),
     });
     const data = await response.json();
-    setReviewCount(prev => prev + 1)
+    setReviewCount((prev) => prev + 1);
     return data;
   };
 
   const fetchLoactionInfo = async () => {
-    console.log("HIT");
-    const response = await fetch(
-      `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${address}%autocomplete=true&key=AIzaSyAPc_6sz46iF_TGER4yAVGtQWIHzNH0ozY`
-    );
-    const data = await response.json();
+    try {
+      const response = await fetch(
+        `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${address}%autocomplete=true&key=AIzaSyAPc_6sz46iF_TGER4yAVGtQWIHzNH0ozY`
+      );
+      const data = await response.json();
 
-    // setPlaceId(data.results[0].place_id);
-    setLat(data.results[0].geometry.location.lat);
-    setLng(data.results[0].geometry.location.lng);
-    await addLocation();
-    const haveLocation = await checkIfLocationExists();
-    if (haveLocation) {
-      setLocationId(haveLocation.id);
+      if (data.results && data.results.length > 0) {
+        setLat(data.results[0].geometry.location.lat);
+        setLng(data.results[0].geometry.location.lng);
+      } else {
+        // Handle the case where no results were found
+      }
+
+      await addLocation();
+      const haveLocation = await checkIfLocationExists();
+      if (haveLocation) {
+        setLocationId(haveLocation.id);
+      }
+    } catch (error) {
+      console.error("Error fetching location information:", error);
+      // Handle the API error (e.g., show an error message to the user)
     }
   };
 
   const checkIfLocationExists = async () => {
-    const response = await fetch(
-      `${url}/location_by_address/${address}`
-    );
+    const response = await fetch(`${url}/location_by_address/${address}`);
     const data = await response.json();
     return data;
   };
