@@ -61,31 +61,31 @@ const Search = ({isLoggedIn}) => {
     return data;
   };
 
-  const fetchLoactionInfo = async () => {
-    try {
-      const response = await fetch(
-        `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${address}%autocomplete=true&key=AIzaSyAPc_6sz46iF_TGER4yAVGtQWIHzNH0ozY`
-      );
-      const data = await response.json();
-  
-      if (data.results && data.results.length > 0) {
-        setLat(data.results[0].geometry.location.lat);
-        setLng(data.results[0].geometry.location.lng);
-      } else {
-        // Handle the case where no results were found
-      }
-  
-      await addLocation();
-      const haveLocation = await checkIfLocationExists();
-      if (haveLocation) {
-        setLocationId(haveLocation.id);
-      }
-    } catch (error) {
-      console.error("Error fetching location information:", error);
-      // Handle the API error (e.g., show an error message to the user)
+const fetchLoactionInfo = async () => {
+  try {
+    const response = await fetch(
+      `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${address}%autocomplete=true&key=AIzaSyAPc_6sz46iF_TGER4yAVGtQWIHzNH0ozY`
+    );
+    const data = await response.json();
+
+    if (data.results && data.results.length > 0) {
+      setLat(data.results[0].geometry.location.lat);
+      setLng(data.results[0].geometry.location.lng);
+    } else {
+      // Handle the case where no results were found
     }
-  };
-  
+
+    await addLocation();
+    const haveLocation = await checkIfLocationExists();
+    if (haveLocation) {
+      setLocationId(haveLocation.id);
+    }
+  } catch (error) {
+    console.error("Error fetching location information:", error);
+    // Handle the API error (e.g., show an error message to the user)
+  }
+};
+
 
   const checkIfLocationExists = async () => {
     const response = await fetch(
