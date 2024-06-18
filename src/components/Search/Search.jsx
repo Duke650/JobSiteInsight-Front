@@ -12,15 +12,28 @@ const Search = ({ isLoggedIn }) => {
   const [lng, setLng] = useState(null);
   const [locationId, setLocationId] = useState(0);
   const [reviewCount, setReviewCount] = useState(0);
+  const [apiKey, setApiKey] = useState('');
   const url = config.backendURL;
 
   const autoCompletedRef = useRef();
   const inputRef = useRef();
 
-  const options = {
-    componentRestrictions: { country: "us" },
-    fields: ["address_components", "adr_address", "formatted_address", "name", "photos", "url"],
-  };
+  useEffect(() => {
+    const fetchApiKey = async () => {
+      try {
+        const apiKey = import.meta.env.VITE_REACT_APP_GOOGLE_API_KEY;
+        if (!apiKey) {
+          throw new Error('API key not found in environment variables');
+        }
+        setApiKey(apiKey);
+      } catch (error) {
+        console.error('Error fetching API key:', error);
+        // Handle error, show message to user, etc.
+      }
+    };
+
+    fetchApiKey();
+  }, []);
 
   useEffect(() => {
     const initializeAutocomplete = () => {
@@ -29,6 +42,11 @@ const Search = ({ isLoggedIn }) => {
         return;
       }
 
+      const options = {
+        componentRestrictions: { country: "us" },
+        fields: ["address_components", "adr_address", "formatted_address", "name", "photos", "url"],
+      };
+
       autoCompletedRef.current = new window.google.maps.places.Autocomplete(inputRef.current, options);
       autoCompletedRef.current.addListener("place_changed", () => {
         const place = autoCompletedRef.current.getPlace();
@@ -36,57 +54,66 @@ const Search = ({ isLoggedIn }) => {
       });
     };
 
-    loadScript(`https://maps.googleapis.com/maps/api/js?key=AIzaSyAPc_6sz46iF_TGER4yAVGtQWIHzNH0ozY&libraries=places`)
-      .then(initializeAutocomplete)
-      .catch((err) => console.error("Error loading Google Maps script:", err));
-
+    if (apiKey) {
+      loadScript(`https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=places`)
+        .then(initializeAutocomplete)
+        .catch((err) => console.error("Error loading Google Maps script:", err));
+    }
+    
     return () => {
       if (autoCompletedRef.current) {
         autoCompletedRef.current.unbindAll();
       }
     };
-  }, []);
+  }, [apiKey]);
 
   const addLocation = async () => {
-    const response = await fetch(`${url}/add_job_location`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ formatted_address: address }),
-    });
-    const data = await response.json();
-    setReviewCount((prev) => prev + 1);
-    return data;
+    try {
+      const response = await fetch(`${url}/add_job_location`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ formatted_address: address }),
+      });
+      const data = await response.json();
+      setReviewCount((prev) => prev + 1);
+      return data;
+    } catch (error) {
+      console.error("Error adding location:", error);
+    }
   };
 
   const fetchLocationInfo = async () => {
     try {
-      const response = await fetch(
-        `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${address}%autocomplete=true&key=AIzaSyAPc_6sz46iF_TGER4yAVGtQWIHzNH0ozY`
-      );
+      const encodedAddress = encodeURIComponent(address);
+      const proxyUrl = `${url}/proxy?url=https://maps.googleapis.com/maps/api/place/textsearch/json?query=${encodedAddress}&key=${apiKey}`;
+      const response = await fetch(proxyUrl);
       const data = await response.json();
 
       if (data.results && data.results.length > 0) {
-        setLat(data.results[0].geometry.location.lat);
-        setLng(data.results[0].geometry.location.lng);
+        const { lat, lng } = data.results[0].geometry.location;
+        setLat(lat);
+        setLng(lng);
+        await addLocation();
+        const haveLocation = await checkIfLocationExists();
+        if (haveLocation) {
+          setLocationId(haveLocation.id);
+        }
       } else {
-        // Handle the case where no results were found
-      }
-
-      await addLocation();
-      const haveLocation = await checkIfLocationExists();
-      if (haveLocation) {
-        setLocationId(haveLocation.id);
+        console.warn("No results found for the given query.");
       }
     } catch (error) {
       console.error("Error fetching location information:", error);
-      // Handle the API error (e.g., show an error message to the user)
     }
   };
 
   const checkIfLocationExists = async () => {
-    const response = await fetch(`${url}/location_by_address/${address}`);
-    const data = await response.json();
-    return data;
+    try {
+      const response = await fetch(`${url}/location_by_address/${address}`);
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error("Error checking location:", error);
+    }
   };
 
   return (
@@ -144,5 +171,4 @@ const loadScript = (url) => {
   });
 };
 
-export default Search;
-
+export default Search
