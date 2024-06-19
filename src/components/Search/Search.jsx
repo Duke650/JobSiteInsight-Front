@@ -42,12 +42,10 @@ const Search = ({ isLoggedIn }) => {
         return;
       }
 
-      const options = {
+      autoCompletedRef.current = new window.google.maps.places.Autocomplete(inputRef.current, {
         componentRestrictions: { country: "us" },
         fields: ["address_components", "adr_address", "formatted_address", "name", "photos", "url"],
-      };
-
-      autoCompletedRef.current = new window.google.maps.places.Autocomplete(inputRef.current, options);
+      });
       autoCompletedRef.current.addListener("place_changed", () => {
         const place = autoCompletedRef.current.getPlace();
         setAddress(place.formatted_address);
@@ -171,4 +169,4 @@ const loadScript = (url) => {
   });
 };
 
-export default Search
+export default Search;
